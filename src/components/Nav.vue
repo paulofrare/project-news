@@ -31,13 +31,18 @@ export default {
 
   data() {
     return {
-      tab: ""
+      tab: "geral",
     };
-  }
+  },
 };
 </script>
 
 <style>
+.nav {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
 .tab {
   font-family: "Playfair Display", serif;
   padding-right: 20px;

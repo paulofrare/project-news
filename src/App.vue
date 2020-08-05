@@ -19,11 +19,20 @@ export default {
 
   data() {
     return {};
-  }
+  },
 };
 </script>
 
 <style>
+body {
+  font-family: "Playfair Display", serif;
+}
+
+#app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
 .v-enter,
 .v-leave-to {
   opacity: 0;
