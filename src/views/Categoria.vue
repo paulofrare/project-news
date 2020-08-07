@@ -1,6 +1,6 @@
 <template>
   <div class="home" v-if="ready">
-    <div v-for="noticia in noticias" :key="noticia.publishedAt" class="noticia">
+    <div v-for="(noticia, index) in noticias" :key="index" class="noticia">
       <div
         v-if="noticia.urlToImage && noticia.publishedAt && noticia.description"
         class="noticia-container"
@@ -21,6 +21,16 @@
         <q-separator size="4" color="black" />
       </div>
     </div>
+    <div class="btn">
+      <q-btn
+        v-if="mostraBtn"
+        @click="buscar(page)"
+        class="btn"
+        outline
+        color="black"
+        label="Mais noticias"
+      />
+    </div>
   </div>
 </template>
 
@@ -36,19 +46,26 @@ export default {
     return {
       noticias: [],
       ready: false,
+      page: null,
+      totalResults: 0,
+      mostraBtn: false,
     };
   },
   watch: {
     categoria() {
-      this.buscar();
+      this.page = 1;
+      this.ready = false;
+      this.noticias = [];
+      this.buscar(this.page);
     },
   },
   created() {
-    this.buscar();
+    this.page = 1;
+    this.buscar(this.page);
   },
   methods: {
-    buscar() {
-      this.ready = false;
+    async buscar(pag) {
+      this.mostraBtn = false;
       let cat = "";
       switch (this.categoria) {
         case "geral":
@@ -70,10 +87,16 @@ export default {
           cat = "sports";
           break;
       }
-      api.get(cat).then((r) => {
-        this.noticias = r.data.articles;
+      await api.get(cat, pag).then((r) => {
+        this.noticias.push(...r.data.articles);
+        this.totalResults = r.data.totalResults;
         this.ready = true;
+        this.page++;
       });
+      if (this.noticias.length < this.totalResults) {
+        console.log("aui");
+        this.mostraBtn = true;
+      }
     },
   },
 };
@@ -119,5 +142,9 @@ export default {
   font-family: "Playfair Display", serif;
   font-size: 1.5rem;
   margin-bottom: 15px;
+}
+
+.btn {
+  margin-top: 20px;
 }
 </style>

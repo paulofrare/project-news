@@ -7,11 +7,11 @@ const axiosInstance = axios.create({
     },
     json: true
 });
-const api_key = "374efa4078db4f3b9346aefc4e9ff54e";
+const api_key = "4feab808b1014a288e15d01e8cf0b9d3";
 const country = "br";
 
 export const api = {
-    get(categoria) {
-        return axiosInstance.get(`?country=${country}&category=${categoria}&apiKey=${api_key}`);
+    get(categoria, pagina) {
+        return axiosInstance.get(`?country=${country}&category=${categoria}&pageSize=10&page=${pagina}&apiKey=${api_key}`);
     }
 };

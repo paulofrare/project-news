@@ -6,6 +6,7 @@
       <transition mode="out-in">
         <router-view />
       </transition>
+      <Footer></Footer>
     </q-page-container>
   </q-layout>
 </template>
@@ -13,9 +14,10 @@
 <script>
 import Header from "./components/Header.vue";
 import Nav from "./components/Nav.vue";
+import Footer from "./components/Footer.vue";
 export default {
   name: "LayoutDefault",
-  components: { Header, Nav },
+  components: { Header, Nav, Footer },
 
   data() {
     return {};
